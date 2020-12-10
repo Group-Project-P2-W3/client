@@ -5,10 +5,41 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    player: 0,
+    roomStatus: 'waiting'
   },
   mutations: {
+    addPlayer (state) {
+      state.player++
+    },
+    roomStatusChange (state) {
+      state.roomStatus = 'start'
+    }
   },
   actions: {
+    join (context, state) {
+      if (state.roomStatus !== 'start') {
+        context.commit('addPlayer')
+        this.$router('/game')
+      } else {
+        Vue.Swal(
+          'Fail to Join!',
+          'Room Already Start The Game!',
+          'error'
+        )
+      }
+    },
+    start (context, state) {
+      if (state.player >= 2) {
+        this.$router('/game')
+      } else {
+        Vue.Swal(
+          'Fail to Start!',
+          'Minimum 2 Player to Start!',
+          'error'
+        )
+      }
+    }
   },
   modules: {
   }

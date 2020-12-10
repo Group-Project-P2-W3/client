@@ -42,7 +42,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
         2. Permainan dimulai jika lebih dari 2 orang (Marcell)
         3. Room tidak dapat dimasuki jika sudah dimulai (Marcell)
         4. Ketika permainan dimulai ada waktu per pertanyaan (Josep)
-    2. Koneksi Socket.io (Marcel)
+    2. Koneksi Socket.io (Marcel) 
     3. Tampilan 
         Login (Josep)
         Home (Reyhan)
