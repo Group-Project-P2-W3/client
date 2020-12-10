@@ -13,6 +13,11 @@ export default {
   name: 'Home',
   components: {
     HelloWorld
+  },
+  sockets: {
+    connect () {
+      console.log('Socket.io client connected')
+    }
   }
 }
 </script>
