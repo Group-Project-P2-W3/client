@@ -31,6 +31,7 @@ export default new Vuex.Store({
     },
     start (context, state) {
       if (state.player >= 2) {
+        context.commit('roomStatusChange')
         this.$router('/game')
       } else {
         Vue.Swal(

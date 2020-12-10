@@ -12,7 +12,7 @@ export default {
   },
   methods: {
     addPlayer () {
-        this.$store.dispatch('join')
+      this.$store.dispatch('join')
     }
   }
 }
