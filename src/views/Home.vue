@@ -16,6 +16,14 @@ export default {
     connect () {
       console.log('Socket.io client connected')
     }
+  },
+  methods: {
+    createRoom () {
+      this.$store.dispatch('createRoom')
+    },
+    join () {
+      this.$store.dispatch('joinRoom')
+    }
   }
 }
 </script>
