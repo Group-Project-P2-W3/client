@@ -14,7 +14,7 @@ Vue.use(VueSweetalert2, options)
 
 Vue.use(new VueSocketIO({
   debug: true,
-  connection: 'http://localhost:3000/',
+  connection: 'https://morning-refuge-95088.herokuapp.com/',
   vuex: {
     store,
     actionPrefix: 'SOCKET_',
