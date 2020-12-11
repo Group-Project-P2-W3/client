@@ -6,7 +6,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     player: 0,
-    roomStatus: 'waiting'
+    roomStatus: 'waiting',
+    questions: [],
+    questionShifted: []
   },
   mutations: {
     addPlayer (state) {
@@ -17,6 +19,15 @@ export default new Vuex.Store({
     },
     decreasePlayer (state) {
       state.player--
+    },
+    SOCKET_init (state, payload) {
+      console.log(payload)
+      state.questions = payload
+      state.questionShifted = payload
+    },
+    questionShift (state, payload) {
+      state.questionShifted.splice(payload, 1)
+
     }
   },
   actions: {
@@ -50,6 +61,10 @@ export default new Vuex.Store({
     leave (context) {
       context.commit('decreasePlayer')
       this.$router('/rooms')
+    },
+    answerClicked (context, state) {
+      const random = Math.floor(Math.random() * state.questionShifted.length)
+      context.commit('questionShift', random)
     }
   },
   modules: {
