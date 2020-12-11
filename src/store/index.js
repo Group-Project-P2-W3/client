@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     player: 0,
+    roomName: 'test-roomName',
     roomStatus: 'waiting',
     questions: [],
     questionShifted: []
@@ -27,7 +28,9 @@ export default new Vuex.Store({
     },
     questionShift (state, payload) {
       state.questionShifted.splice(payload, 1)
-
+    },
+    roomNameChange (state, payload) {
+      state.roomName = payload
     }
   },
   actions: {
@@ -65,6 +68,9 @@ export default new Vuex.Store({
     answerClicked (context, state) {
       const random = Math.floor(Math.random() * state.questionShifted.length)
       context.commit('questionShift', random)
+    },
+    roomNameChange ({ context }, payload) {
+      context.commit('roomNameChange', payload)
     }
   },
   modules: {
