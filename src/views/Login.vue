@@ -11,10 +11,10 @@
               <div class="card-body">
                 <h3 class="card-title">Welcome To The Jungle, My Friends!</h3>
                 <p>Please tell me your name..</p>
-                <form class="form-container" id="loginForm" @submit.prevent="login">
+                <form class="form-container" id="loginForm" @submit.prevent="playerLogin">
                     <div class="form-group mb-2">
-                      <label for="emailLoginForm">Name</label>
-                      <input type="email" class="form-control" id="emailLogin" v-model="userName" aria-describedby="emailHelp" required>
+                      <label for="name">Name</label>
+                      <input type="text" class="form-control" id="name" v-model="userName" aria-describedby="nameHelp" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">To The Jungle!</button>
                 </form>
@@ -34,6 +34,15 @@ export default {
   data () {
     return {
       userName: ''
+    }
+  },
+  methods: {
+    playerLogin () {
+      const player = {
+        username: this.userName,
+        score: 0
+      }
+      this.$socket.emit('playerLogin', player)
     }
   }
 }

@@ -5,16 +5,15 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    player: 0,
     roomName: 'test-roomName',
     roomStatus: 'waiting',
-    questions: [],
     questionShifted: [],
-    question: ''
+    question: '',
+    players: []
   },
   mutations: {
-    addPlayer (state) {
-      state.player++
+    SOCKET_addPlayer (state, payload) {
+      state.players = payload
     },
     roomStatusChange (state) {
       state.roomStatus = 'start'
@@ -24,7 +23,6 @@ export default new Vuex.Store({
     },
     SOCKET_init (state, payload) {
       console.log(payload)
-      state.questions = payload
       state.questionShifted = payload
     },
     questionShift (state, payload) {
