@@ -14,10 +14,13 @@ export default new Vuex.Store({
     },
     roomStatusChange (state) {
       state.roomStatus = 'start'
+    },
+    decreasePlayer (state) {
+      state.player--
     }
   },
   actions: {
-    join (context, state) {
+    join ({ context, state }) {
       if (state.roomStatus !== 'start') {
         context.commit('addPlayer')
         this.$router('/game')
@@ -29,7 +32,7 @@ export default new Vuex.Store({
         )
       }
     },
-    start (context, state) {
+    start ({ context, state }) {
       if (state.player >= 2) {
         context.commit('roomStatusChange')
         this.$router('/game')
@@ -40,6 +43,13 @@ export default new Vuex.Store({
           'error'
         )
       }
+    },
+    createRoom (context) {
+      this.$router('/create')
+    },
+    leave (context) {
+      context.commit('decreasePlayer')
+      this.$router('/rooms')
     }
   },
   modules: {

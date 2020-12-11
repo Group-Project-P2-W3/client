@@ -11,8 +11,11 @@ export default {
     }
   },
   methods: {
-    addPlayer () {
-      this.$store.dispatch('join')
+    start () {
+      this.$store.dispatch('start')
+    },
+    decreasePlayer () {
+      this.$store.dispatch('leave')
     }
   }
 }
