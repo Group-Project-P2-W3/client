@@ -9,7 +9,8 @@ export default new Vuex.Store({
     roomStatus: 'waiting',
     questionShifted: [],
     question: '',
-    players: []
+    players: [],
+    startGame: false
   },
   mutations: {
     SOCKET_addPlayer (state, payload) {
@@ -23,20 +24,19 @@ export default new Vuex.Store({
     },
     SOCKET_init (state, payload) {
       console.log(payload)
+      state.startGame = true
       state.questionShifted = payload
     },
     questionShift (state, payload) {
       state.question = state.questionShifted[payload].question
+      console.log(state.question)
       state.questionShifted.splice(payload, 1)
-    },
-    roomNameChange (state, payload) {
-      state.roomName = payload
     }
   },
   actions: {
-    join ({ context, state }) {
+    join ({ commit }, state) {
       if (state.roomStatus !== 'start') {
-        context.commit('addPlayer')
+        commit('addPlayer')
         this.$router('/game')
       } else {
         Vue.Swal(
@@ -46,21 +46,6 @@ export default new Vuex.Store({
         )
       }
     },
-    start ({ context, state }) {
-      if (state.player >= 2) {
-        context.commit('roomStatusChange')
-        this.$router('/game')
-      } else {
-        Vue.Swal(
-          'Fail to Start!',
-          'Minimum 2 Player to Start!',
-          'error'
-        )
-      }
-    },
-    createRoom (context) {
-      this.$router('/create')
-    },
     leave (context) {
       context.commit('decreasePlayer')
       this.$router('/rooms')
@@ -69,9 +54,6 @@ export default new Vuex.Store({
       console.log(context)
       const random = Math.floor(Math.random() * context.state.questionShifted.length)
       context.commit('questionShift', random)
-    },
-    roomNameChange ({ context }, payload) {
-      context.commit('roomNameChange', payload)
     }
   },
   modules: {

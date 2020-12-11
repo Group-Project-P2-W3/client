@@ -43,6 +43,12 @@ export default {
         score: 0
       }
       this.$socket.emit('playerLogin', player)
+      this.$router.push('/game')
+    }
+  },
+  sockets: {
+    connect () {
+      console.log('Socket.io client connected')
     }
   }
 }
