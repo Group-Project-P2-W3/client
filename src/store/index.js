@@ -26,6 +26,9 @@ export default new Vuex.Store({
       console.log(payload)
       state.startGame = true
       state.questionShifted = payload
+      const random = Math.floor(Math.random() * state.questionShifted.length)
+      state.question = state.questionShifted[random].question
+      state.questionShifted.splice(random, 1)
     },
     questionShift (state, payload) {
       state.question = state.questionShifted[payload].question
