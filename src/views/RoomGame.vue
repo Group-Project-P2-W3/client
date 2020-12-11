@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>INI ROOM GAME</h1>
+    <p>{{allPlayers}}</p>
+    <button @click="startGame" v-if="totalPlayer > 1">Start Game</button>
     <p>Pertanyaan: {{getQuestion}}</p>
     <input type="text" v-model="answer">
     <button type="submit" @click.prevent="answerClicked">JAWAB</button>
@@ -16,11 +18,14 @@ export default {
     }
   },
   computed: {
-    player () {
-      return this.$store.state.player
+    totalPlayer () {
+      return this.$store.state.players.length
     },
     getQuestion () {
       return this.$store.state.question
+    },
+    allPlayers () {
+      return this.$store.state.players
     }
   },
   methods: {
@@ -29,6 +34,9 @@ export default {
     },
     answerClicked () {
       this.$store.dispatch('answerClicked')
+    },
+    startGame () {
+      this.$socket.emit('startGame')
     }
   }
 }
