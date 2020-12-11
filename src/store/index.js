@@ -9,7 +9,8 @@ export default new Vuex.Store({
     roomName: 'test-roomName',
     roomStatus: 'waiting',
     questions: [],
-    questionShifted: []
+    questionShifted: [],
+    question: ''
   },
   mutations: {
     addPlayer (state) {
@@ -27,6 +28,7 @@ export default new Vuex.Store({
       state.questionShifted = payload
     },
     questionShift (state, payload) {
+      state.question = state.questionShifted[payload].question
       state.questionShifted.splice(payload, 1)
     },
     roomNameChange (state, payload) {
@@ -65,8 +67,9 @@ export default new Vuex.Store({
       context.commit('decreasePlayer')
       this.$router('/rooms')
     },
-    answerClicked (context, state) {
-      const random = Math.floor(Math.random() * state.questionShifted.length)
+    answerClicked (context) {
+      console.log(context)
+      const random = Math.floor(Math.random() * context.state.questionShifted.length)
       context.commit('questionShift', random)
     },
     roomNameChange ({ context }, payload) {
