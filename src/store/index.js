@@ -31,6 +31,9 @@ export default new Vuex.Store({
       state.question = state.questionShifted[payload].question
       console.log(state.question)
       state.questionShifted.splice(payload, 1)
+    },
+    SOCKET_playersInRoom (state, payload) {
+      state.players = payload
     }
   },
   actions: {
@@ -51,7 +54,6 @@ export default new Vuex.Store({
       this.$router('/rooms')
     },
     answerClicked (context) {
-      console.log(context)
       const random = Math.floor(Math.random() * context.state.questionShifted.length)
       context.commit('questionShift', random)
     }

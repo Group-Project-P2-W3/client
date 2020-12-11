@@ -3,10 +3,9 @@
     <h1 class="m-5">Are you smarter than your friend?</h1>
     <div style="display: flex; justify-content: space-evenly">
       <div>
-        <PlayerList></PlayerList>
+        <PlayerList v-for="(allPlayers, i) in allPlayers" :data="allPlayers" :key="i"></PlayerList>
       </div>
       <div class="container col-md-6">
-        {{allPlayers}}<br>
         <button class="btn btn-primary" @click="startGame" v-if="totalPlayer > 1 && !gameStarted">Start Game</button>
         <form v-if="gameStarted">
           <h6>Pertanyaan:</h6>
@@ -29,7 +28,8 @@ export default {
   },
   data () {
     return {
-      answer: ''
+      answer: '',
+      playerName: []
     }
   },
   computed: {
@@ -52,7 +52,13 @@ export default {
     },
     startGame () {
       this.$socket.emit('startGame')
+    },
+    playersInRoom () {
+      this.$socket.emit('playersInRoom')
     }
+  },
+  created () {
+    this.playersInRoom()
   }
 }
 </script>
