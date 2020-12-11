@@ -27,35 +27,25 @@ export default new Vuex.Store({
       state.startGame = true
       state.questionShifted = payload
       const random = Math.floor(Math.random() * state.questionShifted.length)
-      state.question = state.questionShifted[random].question
+      state.question = state.questionShifted[random]
       state.questionShifted.splice(random, 1)
     },
     questionShift (state, payload) {
-      state.question = state.questionShifted[payload].question
-      console.log(state.question)
+      state.question = state.questionShifted[payload]
       state.questionShifted.splice(payload, 1)
     },
     SOCKET_playersInRoom (state, payload) {
       state.players = payload
+    },
+    SOCKET_addScore (state, payload) {
+      for (let i = 0; i < state.players.length; i++) {
+        if (payload.username === state.players[i].username) {
+          state.players[i] = payload
+        }
+      }
     }
   },
   actions: {
-    join ({ commit }, state) {
-      if (state.roomStatus !== 'start') {
-        commit('addPlayer')
-        this.$router('/game')
-      } else {
-        Vue.Swal(
-          'Fail to Join!',
-          'Room Already Start The Game!',
-          'error'
-        )
-      }
-    },
-    leave (context) {
-      context.commit('decreasePlayer')
-      this.$router('/rooms')
-    },
     answerClicked (context) {
       const random = Math.floor(Math.random() * context.state.questionShifted.length)
       context.commit('questionShift', random)

@@ -44,12 +44,21 @@ export default {
       }
       this.$socket.emit('playerLogin', player)
       this.$router.push('/game')
+      localStorage.setItem('access_token', player.username)
+    },
+    loginChecker () {
+      if (localStorage.getItem('access_token')) {
+        this.$router.push('/game')
+      }
     }
   },
   sockets: {
     connect () {
       console.log('Socket.io client connected')
     }
+  },
+  created () {
+    this.loginChecker()
   }
 }
 </script>
