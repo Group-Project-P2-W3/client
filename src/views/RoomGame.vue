@@ -20,7 +20,7 @@ export default {
       return this.$store.state.player
     },
     getQuestion () {
-      return this.$store.state.questionShifted
+      return this.$store.state.question
     }
   },
   methods: {

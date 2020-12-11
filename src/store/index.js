@@ -8,7 +8,8 @@ export default new Vuex.Store({
     player: 0,
     roomStatus: 'waiting',
     questions: [],
-    questionShifted: []
+    questionShifted: [],
+    question: ''
   },
   mutations: {
     addPlayer (state) {
@@ -23,12 +24,13 @@ export default new Vuex.Store({
       state.questionShifted = payload
     },
     questionShift (state, payload) {
+      state.question = state.questionShifted[payload].question
       state.questionShifted.splice(payload, 1)
     }
   },
   actions: {
-    join (context, state) {
-      if (state.roomStatus !== 'start') {
+    join (context) {
+      if (context.state.roomStatus !== 'start') {
         context.commit('addPlayer')
         this.$router('/game')
       } else {
@@ -39,8 +41,8 @@ export default new Vuex.Store({
         )
       }
     },
-    start (context, state) {
-      if (state.player >= 2) {
+    start (context) {
+      if (context.state.player >= 2) {
         this.$router('/game')
       } else {
         Vue.Swal(
@@ -50,8 +52,8 @@ export default new Vuex.Store({
         )
       }
     },
-    answerClicked (context, state) {
-      const random = Math.floor(Math.random() * state.questionShifted.length)
+    answerClicked (context) {
+      const random = Math.floor(Math.random() * context.state.questionShifted.length)
       context.commit('questionShift', random)
     }
   },
